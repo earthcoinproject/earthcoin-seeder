@@ -61,11 +61,11 @@ public:
         {"testnet", no_argument, &fUseTestNet, 1},
         {"wipeban", no_argument, &fWipeBan, 1},
         {"wipeignore", no_argument, &fWipeBan, 1},
-        {"help", no_argument, 0, 'h'},
+        {"help", no_argument, 0, '?'},
         {0, 0, 0, 0}
       };
       int option_index = 0;
-      int c = getopt_long(argc, argv, "h:n:m:t:p:d:o:", long_options, &option_index);
+      int c = getopt_long(argc, argv, "h:n:m:t:p:d:o:?", long_options, &option_index);
       if (c == -1) break;
       switch (c) {
         case 'h': {
@@ -113,7 +113,10 @@ public:
       }
     }
     if (host != NULL && ns == NULL) showHelp = true;
-    if (showHelp) fprintf(stderr, help, argv[0]);
+    if (showHelp) {
+        fprintf(stderr, help, argv[0]);
+        exit(0);
+    }
   }
 };
 
