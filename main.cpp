@@ -342,8 +342,8 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"dnsseed.earthcointools.org", "seed.earthcointools.org", ""};
-static const string testnet_seeds[] = {"testnet-seed.earthcointools.org", ""};
+static const string mainnet_seeds[] = {"dnsseed.earthcointools.org", "seed.earthcointools.org", "dnsseed.earthchain.info", "seed.earthchain.info", ""};
+static const string testnet_seeds[] = {"testnet-seed.earthcointools.org", "testnet.earthchain.info", ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
