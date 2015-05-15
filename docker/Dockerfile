@@ -19,7 +19,7 @@
 #   https://help.ubuntu.com/community/UFW
 #   http://docs.docker.io/installation/ubuntulinux/#docker-and-ufw
 
-FROM phusion/baseimage:0.9.15
+FROM phusion/baseimage:0.9.16
 MAINTAINER Linki <linki+docker.com@posteo.de>
 
 RUN apt-get update && \
