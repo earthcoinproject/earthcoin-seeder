@@ -19,11 +19,11 @@
 #   https://help.ubuntu.com/community/UFW
 #   http://docs.docker.io/installation/ubuntulinux/#docker-and-ufw
 
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.17
 MAINTAINER Linki <linki+docker.com@posteo.de>
 
 RUN apt-get update && \
-    apt-get install -y build-essential git-core libboost-dev libssl-dev && \
+    apt-get install -y build-essential git libboost-dev libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN git clone https://github.com/earthcoinproject/earthcoin-seeder.git /usr/src/earthcoin-seeder
