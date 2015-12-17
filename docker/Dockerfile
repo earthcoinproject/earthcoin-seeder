@@ -4,10 +4,10 @@
 #   docker build -t linki/earthcoin-seeder .
 #
 # run the dns node:
-#   docker run -d -p 53:53/tcp -p 53:53/udp linki/earthcoin-seeder
+#   docker run -d -p 53:5353/tcp -p 53:5353/udp linki/earthcoin-seeder
 #
 # if you want to poke around in the container:
-#   docker run -ti --rm linki/earthcoin-seeder /bin/bash
+#   docker run -ti --rm --entrypoint /bin/sh linki/earthcoin-seeder -c /bin/bash
 #
 # and don't forget on the host:
 #
@@ -19,19 +19,32 @@
 #   https://help.ubuntu.com/community/UFW
 #   http://docs.docker.io/installation/ubuntulinux/#docker-and-ufw
 
-FROM phusion/baseimage:0.9.17
+FROM debian:8
 MAINTAINER Linki <linki+docker.com@posteo.de>
+
+RUN mkdir -p /app/bin /app/src
+RUN useradd -m app && chown -R app:app /app
 
 RUN apt-get update && \
     apt-get install -y build-essential git libboost-dev libssl-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/earthcoinproject/earthcoin-seeder.git /usr/src/earthcoin-seeder
+USER 1000
 
-WORKDIR /usr/src/earthcoin-seeder
+WORKDIR /app/src
 
-RUN make
+RUN git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git /app/src && \
+    make
 
-ADD earthcoin-seeder.sh /etc/service/earthcoin-seeder/run
+RUN mv /app/src/dnsseed /app/bin/dnsseed
 
-EXPOSE 53
+WORKDIR /app/bin
+
+EXPOSE 5353
+
+ENTRYPOINT ["/app/bin/dnsseed"]
+
+CMD ["-h", "dnsseed.earthcointools.org", \
+     "-n", "seed.earthcointools.org", \
+     "-m", "dnsadmin.earthcointools.org", \
+     "-p", "5353"]

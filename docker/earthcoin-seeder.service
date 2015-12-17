@@ -2,11 +2,9 @@
 Description=Earthcoin Node
 
 # Requirements
-Requires=etcd2.service
 Requires=docker.service
 
 # Dependency ordering
-After=etcd2.service
 After=docker.service
 
 [Service]
@@ -17,15 +15,12 @@ TimeoutStartSec=0
 # work correctly.
 KillMode=none
 
-# Get CoreOS environmental variables
-# EnvironmentFile=/etc/environment
-
 # Pre-start and Start
 ## Directives with "=-" are allowed to fail without consequence
 ExecStartPre=-/usr/bin/docker kill earthcoin-seeder
 ExecStartPre=-/usr/bin/docker rm earthcoin-seeder
 ExecStartPre=/usr/bin/docker pull quay.io/linki/earthcoin-seeder:latest
-ExecStart=/usr/bin/docker run --name earthcoin-seeder -p 53:53/tcp -p 53:53/udp quay.io/linki/earthcoin-seeder:latest
+ExecStart=/usr/bin/docker run --name earthcoin-seeder -p 53:5353/tcp -p 53:5353/udp quay.io/linki/earthcoin-seeder:latest
 
 # Stop
 ExecStop=/usr/bin/docker stop earthcoin-seeder
