@@ -17,6 +17,7 @@ KillMode=none
 
 # Pre-start and Start
 ## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker stop earthcoin-seeder
 ExecStartPre=-/usr/bin/docker kill earthcoin-seeder
 ExecStartPre=-/usr/bin/docker rm earthcoin-seeder
 ExecStartPre=/usr/bin/docker pull quay.io/linki/earthcoin-seeder:latest
