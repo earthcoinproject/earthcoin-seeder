@@ -22,8 +22,8 @@
 FROM debian:8
 MAINTAINER Linki <linki+docker.com@posteo.de>
 
-RUN mkdir -p /app/bin /app/src
-RUN useradd -m app && chown -R app:app /app
+RUN mkdir -p /app/bin /app/src /var/lib/earthcoin-seeder
+RUN useradd -m app && chown -R app:app /app /var/lib/earthcoin-seeder
 
 RUN apt-get update && \
     apt-get install -y build-essential git libboost-dev libssl-dev && \
@@ -38,7 +38,7 @@ RUN git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git
 
 RUN mv /app/src/dnsseed /app/bin/dnsseed
 
-WORKDIR /app/bin
+WORKDIR /var/lib/earthcoin-seeder
 
 EXPOSE 5353
 
