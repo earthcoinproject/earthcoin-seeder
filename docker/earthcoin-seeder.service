@@ -24,6 +24,3 @@ ExecStart=/usr/bin/docker run --name earthcoin-seeder -p 53:5353/tcp -p 53:5353/
 
 # Stop
 ExecStop=/usr/bin/docker stop earthcoin-seeder
-
-[X-Fleet]
-Global=true
