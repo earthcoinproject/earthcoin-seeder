@@ -24,21 +24,29 @@ MAINTAINER Linki <linki+docker.com@posteo.de>
 
 RUN mkdir -p /app/bin /app/src /var/lib/earthcoin-seeder
 
-RUN apk --no-cache add    \
-      boost-dev           \
-      gcc                 \
-      git                 \
-      g++                 \
-      libc-dev            \
-      make                \
-      openssl-dev
-
 WORKDIR /app/src
 
-RUN git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git /app/src && \
-    make
+RUN apk --no-cache add --virtual build_deps    \
+      boost-dev                                \
+      gcc                                      \
+      git                                      \
+      g++                                      \
+      libc-dev                                 \
+      make                                     \
+      openssl-dev                           && \
 
-RUN mv /app/src/dnsseed /app/bin/dnsseed
+    git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git /app/src && \
+    make && \
+
+    mv /app/src/dnsseed /app/bin/dnsseed && \
+
+    rm -rf /app/src && \
+
+    apk --purge del build_deps
+
+RUN apk --no-cache add    \
+      libgcc              \
+      libstdc++
 
 WORKDIR /var/lib/earthcoin-seeder
 
