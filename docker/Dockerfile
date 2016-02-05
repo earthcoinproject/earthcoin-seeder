@@ -35,12 +35,10 @@ RUN apk --no-cache add --virtual build_deps    \
       make                                     \
       openssl-dev                           && \
 
-    git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git /app/src && \
-    make && \
-
-    mv /app/src/dnsseed /app/bin/dnsseed && \
-
-    rm -rf /app/src && \
+    git clone --depth 1 https://github.com/earthcoinproject/earthcoin-seeder.git . && \
+    make                                    && \
+    mv /app/src/dnsseed /app/bin/dnsseed    && \
+    rm -rf /app/src                         && \
 
     apk --purge del build_deps
 
