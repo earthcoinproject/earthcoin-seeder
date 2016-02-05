@@ -7,7 +7,7 @@
 #   docker run -d -p 53:53/tcp -p 53:53/udp linki/earthcoin-seeder
 #
 # if you want to poke around in the container:
-#   docker run -ti --rm --entrypoint /bin/sh linki/earthcoin-seeder -c /bin/bash
+#   docker run -ti --rm --entrypoint /bin/sh linki/earthcoin-seeder -c /bin/sh
 #
 # and don't forget on the host:
 #
@@ -19,14 +19,19 @@
 #   https://help.ubuntu.com/community/UFW
 #   http://docs.docker.io/installation/ubuntulinux/#docker-and-ufw
 
-FROM debian:8
+FROM alpine:3.3
 MAINTAINER Linki <linki+docker.com@posteo.de>
 
 RUN mkdir -p /app/bin /app/src /var/lib/earthcoin-seeder
 
-RUN apt-get update && \
-    apt-get install -y build-essential git libboost-dev libssl-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apk --no-cache add    \
+      boost-dev           \
+      gcc                 \
+      git                 \
+      g++                 \
+      libc-dev            \
+      make                \
+      openssl-dev
 
 WORKDIR /app/src
 
