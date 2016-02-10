@@ -47,6 +47,7 @@ RUN apk --no-cache add    \
       libstdc++
 
 WORKDIR /var/lib/earthcoin-seeder
+VOLUME /var/lib/earthcoin-seeder
 
 EXPOSE 53
 
